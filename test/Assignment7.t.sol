@@ -1,23 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity 0.8.26;
 
-import {Test} from "forge-std/Test.sol";
-import {Assignment7} from "../src/Assignment7.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol"; 
 
-contract Assignment7Test is Test {
-    Assignment7 assignment;
+contract HassanToken is ERC20, Ownable   { 
+        constructor(string memory name, string memory symbol ) ERC20(name, symbol) Ownable(msg.sender) {
 
-    function setUp() public {
-        // pass your token name and symbol here
-        assignment = new Assignment7();
-    }
-
-    function testMintAndTransfer() public {
-        // Mint tokens to the test contract
-        assignment.mint(address(this), 1000 * 10**18);
-
-        // Check balance of the test contract
-        uint256 balance = assignment.balanceOf(address(this));
-        assertEq(balance, 1000 * 10**18, "Balance should be 1000 tokens");
+        }
+    function mint (address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
     }
 }
